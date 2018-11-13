@@ -1,0 +1,48 @@
+
+<div class="container">
+    <form [formGroup]="fromUsuario" (ngSubmit)="onSave()" class="form-login" >
+      <div> <p class="active"> {{mensagem}} </p> </div>
+  
+      <div class="row">
+          <div class="col-md-12">
+              <label>Nome</label>
+              <input type="text" class="form-control" formControlName="nome" [(ngModel)]="nome" > 
+              <label *ngIf="isInvalid('nome','required')" [class.active]="isInvalid('nome','required')" > Campo obrigatório </label>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-12">
+              <label>Email</label>
+              <input type="email" class="form-control" formControlName="email" [(ngModel)]="email" > 
+              <label *ngIf="isInvalid('email','required')" [class.active]="isInvalid('email','required')" > Campo obrigatório </label>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6">
+              <label>Senha</label>
+              <input type="password" class="form-control" formControlName="password" [(ngModel)]="password" > 
+              <label *ngIf="isInvalid('password','required')" [class.active]="isInvalid('password','required')" >  Campo obrigatório  </label>
+          </div>
+  
+          <div class="col-md-6">
+              <label>Senha</label>
+              <input type="password" class="form-control" formControlName="repassword" [(ngModel)]="repassword" (focusout)="onValidatePassword($event)" > 
+              <label *ngIf="isInvalid('repassword','required')" [class.active]="isInvalid('repassword','required')" > Campo obrigatório </label>
+          </div>
+      </div>
+      <div class="row">
+          &nbsp;
+      </div>
+      <div class="row">
+          <div class="col-xl-1 col-md-offset-3">
+              <button type="submit" value="Entrar" class="btn btn-primary">Entrar</button>
+          </div>
+          <div class="col-xl-1 col-md-offset-3">
+              <button ngClick="Cancel()" class="btn btn-secondary">Cancelar</button>
+          </div>
+      </div>
+    </form>
+  </div>
+  
+  
+  

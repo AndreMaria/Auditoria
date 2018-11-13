@@ -1,0 +1,27 @@
+
+
+    <ul style="list-style-type: none;">
+      <li ngbDropdown  class="nav-item dropdown" >
+          <input 
+            ngbDropdownToggle 
+            id="dropdownAutocomplite"
+            class="form-control mr-sm-2 dropdown-toggle" 
+            type="search" 
+            placeholder="Search" 
+            aria-label="Search" 
+            [(ngModel)]="query" 
+            (keyup)="onKey($event)" 
+          >
+  
+          <div ngbDropdownMenu class="dropdown-menu search-results" aria-labelledby="dropdownAutocomplite">
+              <a 
+                *ngFor="let item of listAutocomplite" 
+                class="dropdown-item" 
+                (click)="onClickAutocomplite(item)"
+              >
+                {{item.Texto}}
+              </a>
+          </div>
+        </li>
+    </ul>
+

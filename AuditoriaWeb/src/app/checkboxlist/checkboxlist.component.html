@@ -1,0 +1,5 @@
+
+<label *ngFor="let item of listCheckbox ; let i = index" class="dropdown-item">
+  <input type="checkbox" value="{{item.Id}}" id="{{item.Id}}" (click)="onCheck($event)" >
+  {{item.Texto}}
+</label>  

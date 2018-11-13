@@ -1,0 +1,14 @@
+
+
+    <ul style="list-style-type: none;">
+        <li ngbDropdown  class="nav-item dropdown" >
+            <input ngbDropdownToggle class="form-control mr-sm-2 dropdown-toggle" type="button" 
+            [(ngModel)]="colaborador" 
+            id="dropdownMenuButton"   >  
+
+            <div ngbDropdownMenu class="dropdown-menu search-results"  aria-labelledby="dropdownMenuButton">
+                <a *ngFor="let item of listDropdown" class="dropdown-item" (click)="onClickDropdown(item)">{{item.Texto}}</a>
+            </div>
+        </li>
+    </ul>
+

@@ -1,0 +1,57 @@
+
+<div class="container">
+  <form [formGroup]="fromDocumentos" (ngSubmit)="onSave()" class="form-login" >
+    <div> <p class="active"> {{mensagem}} </p> </div>
+    <div class="col-sm-12">
+      <div class="row">
+          <div class="col-md-6">
+              <label>Quiosque</label>
+              <app-autocomplite (onResult)="onInitDropDown($event)"></app-autocomplite>
+              <input type="hidden" formControlName="idLoja" [(ngModel)]="idLoja" > 
+              <label *ngIf="isInvalid('idLoja','required')" [class.active]="isInvalid('idLoja','required')" >  Campo obrigatório  </label>
+          </div>
+  
+          <div class="col-md-6">
+              <label>Colaborador</label>
+              <app-dropdown  *ngIf="listDropDown" [listDropdown]="listDropDown" (ItemSelected)="onSelectedDrop($event)" ></app-dropdown>
+              <input type="hidden" formControlName="idColadorador" [(ngModel)]="idColadorador" > 
+              <label *ngIf="isInvalid('idColadorador','required')" [class.active]="isInvalid('idColadorador','required')" > Campo obrigatório </label>
+          </div>
+      </div>
+      <div class="row">
+            &nbsp;
+          </div>
+      <div class="row">
+          <div class="card col-md-12" style="overflow-y: scroll; height: 220px;">
+              <label>Documentos</label>
+              <app-checkboxlist (onResult)="onSelectedCheckbox($event)"></app-checkboxlist>
+              <input type="hidden" formControlName="listIdDocumentos" [(ngModel)]="listIdDocumentos" > 
+          </div>
+      </div>
+      <div class="row">
+        &nbsp;
+      </div>
+      <label *ngIf="isInvalid('listIdDocumentos','required')" [class.active]="isInvalid('listIdDocumentos','required')" >  Campo obrigatório </label>
+
+      <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Obs:</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Obs" aria-label="Obs" aria-describedby="basic-addon1" formControlName="obs"  [(ngModel)]="obs" >
+      </div>
+    </div>
+    <div class="row">
+            &nbsp;
+     </div>
+    <div class="row">
+        <div class="col-xl-1 col-md-offset-3">
+            <button type="submit" value="Entrar" class="btn btn-primary">Entrar</button>
+        </div>
+        <div class="col-xl-1 col-md-offset-3">
+            <button ngClick="Cancel()" class="btn btn-secondary">Cancelar</button>
+        </div>
+    </div>
+  </form>
+</div>
+
+

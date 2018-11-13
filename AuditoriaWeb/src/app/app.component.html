@@ -1,0 +1,8 @@
+<app-login *ngIf="!statuslogin" (onStatus)="onStatusLogin($event)" ></app-login>
+
+<div *ngIf="statuslogin" class="container">
+    <app-nav-bar [isLoggedIn]="statuslogin" ></app-nav-bar>
+    <router-outlet></router-outlet>
+</div>
+
+

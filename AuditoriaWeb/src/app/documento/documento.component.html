@@ -1,0 +1,49 @@
+  
+<table class="table  table-borderless">
+    <thead>
+    <tr>
+        <th scope="col" data-field="Index">#</th>
+        <th scope="col" data-field="Loja">Loja</th>
+        <th scope="col" data-field="Colaborador">Colaborador</th>
+        <th scope="col" data-field="Documentos">Documentos</th>
+        <th scope="col" data-field="Obs">Obs</th>
+    </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let item of listAuditoria">
+        <td scope="row">{{ item.Index }}</td>
+        <td>{{ item.NomeLoja }}</td>
+        <td>{{ item.NomeColaborador }}</td>
+        <td>{{ item.Documentos }}</td>
+        <td>{{ item.Obs }}</td>
+        <td>{{ item.DataCadastro }}</td>
+        </tr>
+    </tbody>
+</table>
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        <li *ngFor="let item of listPagination" class="page-item">
+            <a class="page-link" (click)="onInitAuditoria(item.Id)" >{{item.id}}</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large waves-effect waves-light green"
+       routerLink="/documento/novo">
+      <i class="material-icons">Novo Registro</i>
+    </a>
+  </div>
+  
