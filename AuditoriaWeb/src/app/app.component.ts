@@ -11,6 +11,6 @@ export class AppComponent {
   public statuslogin : boolean;
 
   onStatusLogin(event){
-    this.statuslogin = event != null ? true : false;
+    this.statuslogin = event[0] != null ? true : false;
   }
 }

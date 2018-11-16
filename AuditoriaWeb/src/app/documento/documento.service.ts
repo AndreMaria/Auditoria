@@ -62,6 +62,31 @@ export class DocumentoService {
         }).catch((erro)=>{ console.log(`[Erro]:${erro}`)});
     }
 
+    getAuditoria(id: number) : Promise<any> {
+      let metodo : string = `GetAuditoria?TokenSecret=${this.token}&id=${id}`;
+      let headers = new Headers({
+        'Content-Type':'application/json; charset=utf-8;' 
+        ,'Accept':'*/*'
+      });
+      let options = new RequestOptions({ headers: headers });
+      return this.http.get(`${this.url}${metodo}`).toPromise().then((response:Response) => {
+        return response.json();
+      }).catch((erro)=>{ console.log(`[Erro]:${erro}`)});
+    }
+
+    getAuditoriaItem(id: number) : Promise<any> {
+      let metodo : string = `GetAuditoriaItem?TokenSecret=${this.token}&id=${id}`;
+      let headers = new Headers({
+        'Content-Type':'application/json; charset=utf-8;' 
+        ,'Accept':'*/*'
+      });
+      let options = new RequestOptions({ headers: headers });
+      return this.http.get(`${this.url}${metodo}`).toPromise().then((response:Response) => {
+        return response.json();
+      }).catch((erro)=>{ console.log(`[Erro]:${erro}`)});
+    }
+
+
     getListCheckbox() : Promise<any> {
       let metodo : string = `GetSubTiposDocumentos?TokenSecret=${this.token}&IdTipoDocumento=0`;
       let headers = new Headers({
@@ -93,6 +118,15 @@ export class DocumentoService {
         return this.createService(`${this.url}${metodo}`,param)
         .then((response) => {return response.json();})
         .catch((erro)=>{ console.log(`[Erro]:${erro}`)});
+    }
+
+    onUpdateAuditoria(param: any): Promise<any> {
+      param.IdUsuario = this.IdUsuario;
+      param.TokenSecret = this.token;
+      let metodo = 'UpdateAuditoria'
+      return this.createService(`${this.url}${metodo}`,param)
+      .then((response) => {return response.json();})
+      .catch((erro)=>{ console.log(`[Erro]:${erro}`)});
     }
 
     private extractData(res: Response) {

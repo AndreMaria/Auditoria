@@ -5,16 +5,14 @@
     <div class="col-sm-12">
       <div class="row">
           <div class="col-md-6">
-              <label>Quiosque</label>
-              <app-autocomplite (onResult)="onInitDropDown($event)"></app-autocomplite>
-              <input type="hidden" formControlName="idLoja" [(ngModel)]="idLoja" > 
+              <label>Quiosque : </label>
+              <label>{{NomeLoja}}</label>
               <label *ngIf="isInvalid('idLoja','required')" [class.active]="isInvalid('idLoja','required')" >  Campo obrigatório  </label>
           </div>
   
           <div class="col-md-6">
-              <label>Colaborador</label>
-              <app-dropdown  *ngIf="listDropDown" [listDropdown]="listDropDown" (ItemSelected)="onSelectedDrop($event)" ></app-dropdown>
-              <input type="hidden" formControlName="idColadorador" [(ngModel)]="idColadorador" > 
+              <label>Colaborador : </label>
+              <label>{{NomeColaborador}}</label>
               <label *ngIf="isInvalid('idColadorador','required')" [class.active]="isInvalid('idColadorador','required')" > Campo obrigatório </label>
           </div>
       </div>
@@ -24,7 +22,7 @@
       <div class="row">
           <div class="card col-md-12" style="overflow-y: scroll; height: 220px;">
               <label>Documentos</label>
-              <app-checkboxlist (onResult)="onSelectedCheckbox($event)"></app-checkboxlist>
+              <app-checkboxlist (onResult)="onSelectedCheckbox($event)" ></app-checkboxlist>
               <input type="hidden" formControlName="listIdDocumentos" [(ngModel)]="listIdDocumentos" > 
           </div>
       </div>
@@ -48,7 +46,7 @@
             <button type="submit" value="Entrar" class="btn btn-primary">Entrar</button>
         </div>
         <div class="col-xl-1 col-md-offset-3">
-            <button type="button"  (click)="Cancel()" class="btn btn-secondary">Cancelar</button>
+            <button type="button" (click)="Cancel()" class="btn btn-secondary">Cancelar</button>
         </div>
     </div>
   </form>

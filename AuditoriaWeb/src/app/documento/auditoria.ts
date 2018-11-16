@@ -56,3 +56,4 @@ export class Auditoria {
         this.idUsuario = value;
     }
 }
+

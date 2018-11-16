@@ -24,6 +24,7 @@ import { docRouting } from './documento/documento.routing';
 import { userRouting } from './usuario/usuario.routing'; 
 import { loginRouting } from './login/login.routing';
 import { LogoffComponent } from './login/logoff/logoff.component';
+import { DocumentoFormEditComponent } from './documento/documento-form-edit/documento-form-edit.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { LogoffComponent } from './login/logoff/logoff.component';
     DocumentoFormComponent,
     UsuarioComponent,
     UsuarioFormComponent,
-    LogoffComponent
+    LogoffComponent,
+    DocumentoFormEditComponent
   ],
   imports: [
     NgbModule.forRoot(),

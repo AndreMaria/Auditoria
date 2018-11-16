@@ -1,50 +1,76 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Input } from '@angular/core';
 import { FormGroup ,FormBuilder, Validators} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { DropdownModel } from './../../dropdown/dropdown.model';
 import { DocumentoService } from './../documento.service'
 import { Auditoria } from './../auditoria';
+import { AuditoriaModel,AuditoriaItem } from '../auditoria.model';
 
 @Component({
-  selector: 'app-documento-form',
-  templateUrl: './documento-form.component.html',
-  styleUrls: ['./documento-form.component.css'],
+  selector: 'app-documento-form-edit',
+  templateUrl: './documento-form-edit.component.html',
+  styleUrls: ['./documento-form-edit.component.css'],
   providers: [DocumentoService]
 })
-export class DocumentoFormComponent implements OnInit {
+export class DocumentoFormEditComponent implements OnInit {
 
-  public listDropDown: Array<DropdownModel>;
   public fromDocumentos : FormGroup;
 
-  private idLoja: number;
-  private idColadorador: number;
+  private id: number;
+  private NomeLoja: string;
+  private NomeColaborador: string;
   private listIdDocumentos: string;
   private obs : string;
-
   private listDoc : Array<number>;
   private mensagem: string;
+  private auditoria : AuditoriaModel;
 
   constructor(private formBuilder: FormBuilder, 
     private service: DocumentoService,
     private route: ActivatedRoute,
     private router: Router) { }
+    public docsUtilizados : Array<DropdownModel>;
 
   ngOnInit() {
     if(!localStorage.getItem('currentUser')){
       this.router.navigate(['/login']);
     }
+
     this.validate();
+
     this.listDoc = new Array<number>();
+
+    this.loadDocumento();
   }
 
   validate() {
     this.fromDocumentos = this.formBuilder.group({
-      idLoja : ['idLoja', Validators.required],
-      idColadorador : ['idColadorador', Validators.required],
+      idLoja : ['NomeLoja', Validators.required],
+      idColadorador : ['idColadorador'],
       listIdDocumentos : ['listIdDocumentos'],
       obs : ['obs']
     });
+  }
+
+  loadDocumento(){
+    let _id = this.route.snapshot.params["id"]
+    if(_id){
+      let result = this.service.getAuditoria(Number(_id));
+
+      result.then((items) => {
+        this.id = items.Item.id;
+        this.NomeLoja = items.Item.Nomeloja;
+        this.NomeColaborador = items.Item.NomePessoa;
+        this.obs = items.Item.Obs;
+        if(items.Item.AuditoriaItem){
+          for( let i = 0; i < items.Item.AuditoriaItem.length; i++ ) {
+            const element = items.Item.AuditoriaItem[i];
+            this.listDoc.push(element.idSubTiposDocumentos);
+          }
+        }
+      }); 
+    }
   }
 
   isInvalid(field: string, validate: string) {
@@ -53,35 +79,11 @@ export class DocumentoFormComponent implements OnInit {
     return status;
   }
 
-  onInitDropDown(item: DropdownModel){
-    this.listDropDown = new Array<DropdownModel>();
-    if (item.Id > 0) {
-      this.idLoja = item.Id;
-      let result = this.service.getListDropDownById(item.Id);
-      result.then((items) => {
-        for( let i = 0; i < items.length; i++ ) {
-          const element = items[i];
-          const item:DropdownModel = new DropdownModel();
-          item.Id = element.id;
-          item.Texto = element.sNome;
-          item.Checked = true;
-          this.listDropDown.push(item);
-        }
-      });
-    }
-  }
-
-  onSelectedDrop(item: DropdownModel){
-    if (item.Id > 0) {
-      this.idColadorador = item.Id;
-    } 
-  }
-
   onSelectedCheckbox(event: any){
     if(event.currentTarget.checked) {
-      this.listDoc.push(event.currentTarget.id);
+      this.listDoc.push(Number(event.currentTarget.id));
     }else{
-      let index = this.listDoc.findIndex(d => d === event.currentTarget.id); //find index in your array
+      let index = this.listDoc.findIndex(d => d === Number(event.currentTarget.id)); //find index in your array
       this.listDoc.splice(index, 1)
     }
   }
@@ -89,8 +91,7 @@ export class DocumentoFormComponent implements OnInit {
   onSave(){
     if (this.fromDocumentos.valid) {
       let auditoria : Auditoria = new Auditoria();
-      auditoria.IdLoja = this.idLoja;
-      auditoria.IdPessoa = this.idColadorador;
+      auditoria.Id = Number(this.route.snapshot.params["id"]);
 
       if(this.listDoc){
         this.listIdDocumentos = '';
@@ -101,13 +102,12 @@ export class DocumentoFormComponent implements OnInit {
       }
       auditoria.AuditoriaItem = this.listIdDocumentos;
       auditoria.Obs = this.obs;
-      let result = this.service.onInsertAuditoria(auditoria);
+      let result = this.service.onUpdateAuditoria(auditoria);
       this.mensagem = 'Form OK';
       this.router.navigate(['/documento']);
     } else {
       this.mensagem = 'Form Invalido!';
-    }
-    
+    } 
   }
 
   Cancel(){

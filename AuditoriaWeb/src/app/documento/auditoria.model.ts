@@ -5,6 +5,7 @@ export class AuditoriaModel {
     private documentos: string;
     private obs: string;
     private dataCadastro: string;
+    private auditoriaItem: Array<AuditoriaItem>;
 
     get Id() {
         return this.id;
@@ -46,5 +47,48 @@ export class AuditoriaModel {
     }
     set DataCadastro(value: string) {
         this.dataCadastro = value;
+    }
+
+    get AuditoriaItem() {
+        return this.auditoriaItem;
+    }
+    set AuditoriaItem(value: Array<AuditoriaItem>) {
+        this.auditoriaItem = value;
+    }
+}
+
+export class AuditoriaItem {
+
+    private id: number;
+    private idAuditoria: number;
+    private idSubTiposDocumentos: number;
+    private documentosDescricao: string;
+
+    get Id() {
+        return this.id;
+    }
+    set Id(value: number) {
+        this.id = value;
+    }
+
+    get IdAuditoria() {
+        return this.idAuditoria;
+    }
+    set IdAuditoria(value: number) {
+        this.idAuditoria = value;
+    }
+
+    get IdSubTiposDocumentos() {
+        return this.idSubTiposDocumentos;
+    }
+    set IdSubTiposDocumentos(value: number) {
+        this.idSubTiposDocumentos = value;
+    }
+
+    get DocumentosDescricao() {
+        return this.documentosDescricao;
+    }
+    set DocumentosDescricao(value: string) {
+        this.documentosDescricao = value;
     }
 }

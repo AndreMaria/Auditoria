@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DebugNode } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuditoriaModel } from './auditoria.model';
@@ -21,6 +21,7 @@ export class DocumentoComponent implements OnInit {
   private idColadorador: number;
   private listIdDocumentos: string;
   private totalRows: number;
+  private paginaAtual: number;
 
   private mensagem: string;
 
@@ -32,22 +33,44 @@ export class DocumentoComponent implements OnInit {
     if(!localStorage.getItem('currentUser')){
       this.router.navigate(['/login']);
     }
-    this.onInitAuditoria(1);
+    this.paginaAtual = 0;
+    this.onInitAuditoria(0);
+  }
+
+  onNextPagina(){
+    this.paginaAtual = this.paginaAtual + 5;
+    this.onInitAuditoria(this.paginaAtual);
+  }
+
+  onAfterPagina(){
+    if(this.paginaAtual > 0){
+      this.paginaAtual = this.paginaAtual - 5;
+      this.onInitAuditoria(this.paginaAtual);
+    }
   }
 
   onInitAuditoria(inicio:number){
     this.listAuditoria = new Array<AuditoriaModel>();
 
-    let fim:number = inicio + 5;
+    if(this.paginaAtual != inicio){
+      this.paginaAtual = inicio;
+    }
+
+    let fim:number =  inicio + 5;
 
     let result = this.service.getListGrid(inicio,fim);
     result.then((items) => {
       this.totalRows = (items.TotalRows % 5) == 0 ? (items.TotalRows / 5) : ((items.TotalRows + 1) / 5);
 
       this.listPagination = new Array<UtilModel>();
+      let index : number = 0
       for( let i = 0; i < this.totalRows; i++ ) {
         const item:UtilModel = new UtilModel();
-        item.Id = i;
+        if(i ==0){
+          item.Id = i;
+        } else{
+          item.Id = index + 5;
+        }
         item.Texto = i.toString();
         this.listPagination.push(item);
       }

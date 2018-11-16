@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    debugger;
     if(localStorage.getItem('currentUser')){
       this.onOff();
     }

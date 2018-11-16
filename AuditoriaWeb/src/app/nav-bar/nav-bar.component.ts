@@ -15,11 +15,10 @@ export class NavBarComponent implements OnInit {
     private router: Router){}
 
   ngOnInit() {
-
+    console.log(`Status Login = ${this.isLoggedIn}`);
   }
 
   onLogout(){
-    debugger;
     this.isLoggedIn = false; 
     this.router.navigate(['/login']);
   }

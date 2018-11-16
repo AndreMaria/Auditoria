@@ -1,6 +1,7 @@
 export class DropdownModel {
     private id: number;
     private texto: string;
+    private checked: boolean;
 
     get Id() {
         return this.id;
@@ -14,5 +15,12 @@ export class DropdownModel {
     }
     set Texto(value: string) {
         this.texto = value;
+    }
+
+    get Checked() {
+        return this.checked;
+    }
+    set Checked(value: boolean) {
+        this.checked = value;
     }
 }
